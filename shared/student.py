@@ -1,0 +1,3 @@
+STUDENT_NAME = "Олена Іванишин"
+GROUP_NAME = "КБ-208"
+VARIANT_NUMBER = 11
