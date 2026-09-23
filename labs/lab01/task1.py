@@ -1,13 +1,12 @@
+import os
 import random
 import sys
-import os
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../')))
-from shared.student import STUDENT_NAME, GROUP_NAME, VARIANT_NUMBER
-
+from shared.student import GROUP_NAME, STUDENT_NAME, VARIANT_NUMBER
 
 def main():
-    print(f"--- Аналізатор паролів ---")
+    print("--- Аналізатор паролів ---")
     print(f"Студент: {STUDENT_NAME} | Група: {GROUP_NAME} | Варіант: {VARIANT_NUMBER}\n")
 
     passwords = [

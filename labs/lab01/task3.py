@@ -1,13 +1,13 @@
+import csv
+import hashlib
+import json
 import os
 import sys
-import csv
-import json
-import hashlib
-from datetime import datetime
+from datetime import datetime, timezone
 from functools import wraps
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../')))
-from shared.student import STUDENT_NAME, GROUP_NAME, VARIANT_NUMBER
+from shared.student import GROUP_NAME, STUDENT_NAME, VARIANT_NUMBER
 
 MIN_PASSWORD_LENGTH = 12
 DATA_DIR = os.path.join(os.path.dirname(__file__), 'data')
@@ -71,8 +71,7 @@ def log_event(func):
                 "event": "login",
                 "user": username,
                 "result": status,
-                "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-                "args": list(args),
+                "timestamp": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S"),                "args": list(args),
                 "kwargs": kwargs
             }
             try:
@@ -86,7 +85,7 @@ def log_event(func):
                 logs.append(log_entry)
                 with open(LOG_FILE, 'w', encoding='utf-8') as f:
                     json.dump(logs, f, indent=4, ensure_ascii=False)
-            except IOError as io_err:
+            except OSError as io_err:
                 print(f"Помилка запису логу: {io_err}")
         return result
 
@@ -108,7 +107,7 @@ def login(username: str, password: str) -> bool:
 
 
 def main():
-    print(f"--- Завдання 3: Хешування, CSV-база та JSON-логування ---")
+    print("--- Завдання 3: Хешування, CSV-база та JSON-логування ---")
     print(f"Студент: {STUDENT_NAME} | Група: {GROUP_NAME} | Варіант: {VARIANT_NUMBER}\n")
 
     users_to_register = (
@@ -152,7 +151,7 @@ def main():
 
         print(f"\n   Журнал подій успішно записано у: {LOG_FILE}")
 
-    except Exception as e:
+    except Exception as e: # noqa: BLE001
         print(f"Неочікувана помилка системи: {e}")
 
 
