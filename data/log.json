@@ -14,5 +14,21 @@
         "timestamp": "2026-09-24 06:24:37",
         "args": [],
         "kwargs": {}
+    },
+    {
+        "event": "login",
+        "user": "admin1",
+        "result": "success",
+        "timestamp": "2026-09-24 06:29:40",
+        "args": [],
+        "kwargs": {}
+    },
+    {
+        "event": "login",
+        "user": "user02",
+        "result": "failure",
+        "timestamp": "2026-09-24 06:29:40",
+        "args": [],
+        "kwargs": {}
     }
 ]

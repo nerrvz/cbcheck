@@ -10,7 +10,7 @@ try:
 except ImportError:
     VARIANT_NUMBER = 11
 
-DATA_DIR = "data"
+DATA_DIR = "labs/lab01/data"
 USERS_FILE = os.path.join(DATA_DIR, "users.csv")
 LOG_FILE = os.path.join(DATA_DIR, "log.json")
 
