@@ -1,0 +1,74 @@
+[
+    {
+        "event": "login_attempt",
+        "username": "admin",
+        "success": true,
+        "timestamp": "2026-09-24 05:57:13"
+    },
+    {
+        "event": "login_attempt",
+        "username": "elena",
+        "success": false,
+        "timestamp": "2026-09-24 05:57:13"
+    },
+    {
+        "event": "login_attempt",
+        "username": "unknown",
+        "success": false,
+        "timestamp": "2026-09-24 05:57:13"
+    },
+    {
+        "event": "login_attempt",
+        "username": "guest",
+        "success": false,
+        "timestamp": "2026-09-24 05:57:13"
+    },
+    {
+        "event": "login",
+        "user": "admin1",
+        "result": "success",
+        "timestamp": "2026-09-24 06:14:06",
+        "args": [],
+        "kwargs": {}
+    },
+    {
+        "event": "login",
+        "user": "user02",
+        "result": "failure",
+        "timestamp": "2026-09-24 06:14:06",
+        "args": [],
+        "kwargs": {}
+    },
+    {
+        "event": "login",
+        "user": "admin1",
+        "result": "success",
+        "timestamp": "2026-09-24 06:18:04",
+        "args": [],
+        "kwargs": {}
+    },
+    {
+        "event": "login",
+        "user": "user02",
+        "result": "failure",
+        "timestamp": "2026-09-24 06:18:04",
+        "args": [],
+        "kwargs": {}
+    },
+    {
+        "event": "login",
+        "user": "admin1",
+        "result": "success",
+        "timestamp": "2026-09-24 06:19:49",
+        "args": [],
+        "kwargs": {}
+    },
+    {
+        "event": "login",
+        "user": "user02",
+        "result": "failure",
+        "timestamp": "2026-09-24 06:19:49",
+        "args": [],
+        "kwargs": {}
+    }
+]
