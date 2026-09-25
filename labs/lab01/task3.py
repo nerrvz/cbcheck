@@ -152,7 +152,7 @@ def main():
     print("=== Створення бази даних ===")
     create_users(users_to_register)
 
-    print("\n=== Крок 2. Зчитування та вивід структурованої таблиці ===")
+    print("\n=== Зчитування та вивід структурованої таблиці ===")
     users_db = {}
     try:
         with open(USERS_FILE, mode='r', encoding='utf-8') as file:
