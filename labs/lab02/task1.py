@@ -123,7 +123,9 @@ class AuditLog:
 
     def show_all(self) -> None:
         for e in self.entries:
-            print(f"{e.timestamp:%Y-%m-%d %H:%M:%S} UTC | {e.username:<10} | {e.action}")
+            print(
+                f"{e.timestamp:%Y-%m-%d %H:%M:%S} UTC | {e.username:<10} | {e.action}"
+            )
 
 
 class UserAccount:
@@ -148,11 +150,7 @@ class UserAccount:
     def login(self, username: str, password: str, ip: str) -> bool:
         user: User = self._data["user"]  # type: ignore[assignment]
         audit: AuditLog = self._data["audit"]  # type: ignore[assignment]
-        ok = (
-            user.active
-            and username == user.username
-            and user.check_password(password)
-        )
+        ok = user.active and username == user.username and user.check_password(password)
         if not ok:
             audit.add_log(username, "login_failure")
             return False

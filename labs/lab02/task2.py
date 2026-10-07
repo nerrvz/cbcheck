@@ -93,7 +93,10 @@ def split_entries(
         else:
             invalid.append(entry)
             logger.warning(
-                "Рядок %d: некоректний IP/MAC (%r, %r)", entry.line_no, entry.ip, entry.mac
+                "Рядок %d: некоректний IP/MAC (%r, %r)",
+                entry.line_no,
+                entry.ip,
+                entry.mac,
             )
     return valid, invalid
 
@@ -122,26 +125,39 @@ def setup_logging(log_file: Path | None) -> None:
     )
 
 
-def save_report(path: Path, source: Path, total: int, valid: int,
-                invalid: list[ArpEntry], conflicts: list[ArpConflict]) -> None:
+def save_report(
+    path: Path,
+    source: Path,
+    total: int,
+    valid: int,
+    invalid: list[ArpEntry],
+    conflicts: list[ArpConflict],
+) -> None:
     report = {
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "source": str(source),
         "total_entries": total,
         "valid_entries": valid,
         "invalid_entries": [asdict(e) for e in invalid],
-        "conflicts": [{"mac": c.mac, "ips": c.ips, "entries": [asdict(e) for e in c.entries]}
-                      for c in conflicts],
+        "conflicts": [
+            {"mac": c.mac, "ips": c.ips, "entries": [asdict(e) for e in c.entries]}
+            for c in conflicts
+        ],
     }
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
 
 
 def add_arguments(parser: argparse.ArgumentParser) -> None:
-    parser.add_argument("--arp-file", type=Path, required=True, help="CSV/текстова ARP-таблиця")
+    parser.add_argument(
+        "--arp-file", type=Path, required=True, help="CSV/текстова ARP-таблиця"
+    )
     parser.add_argument("--output-json", type=Path, help="Шлях до JSON-звіту")
-    parser.add_argument("--detect-spoofing", action="store_true",
-                        help="Шукати дублікати MAC для різних IP")
+    parser.add_argument(
+        "--detect-spoofing",
+        action="store_true",
+        help="Шукати дублікати MAC для різних IP",
+    )
     parser.add_argument("--log-file", type=Path, help="Файл журналу подій")
 
 
@@ -171,13 +187,19 @@ def run(args: argparse.Namespace) -> int:
         print("[ALERT] MAC Address Duplicate Conflict!")
         print(f"MAC Address: {c.mac} associated with MULTIPLE IP addresses:")
         for e in c.entries:
-            print(f"  - {e.ip} (iface: {e.interface or '-'}, type: {e.entry_type or '-'})")
+            print(
+                f"  - {e.ip} (iface: {e.interface or '-'}, type: {e.entry_type or '-'})"
+            )
         print("-> POSSIBLE MAN-IN-THE-MIDDLE / ARP-SPOOFING ATTACK!")
-        logger.critical("ARP-spoofing suspect: MAC %s -> IPs %s", c.mac, ", ".join(c.ips))
+        logger.critical(
+            "ARP-spoofing suspect: MAC %s -> IPs %s", c.mac, ", ".join(c.ips)
+        )
 
     if args.output_json:
         try:
-            save_report(args.output_json, args.arp_file, total, len(valid), invalid, conflicts)
+            save_report(
+                args.output_json, args.arp_file, total, len(valid), invalid, conflicts
+            )
         except OSError as exc:
             logger.error("Не вдалося зберегти звіт: %s", exc)
             return 2

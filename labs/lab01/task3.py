@@ -20,7 +20,6 @@ PERSONAL_SALT = str(VARIANT_NUMBER).zfill(5)
 
 class ValidationError(Exception):
     """якщо пароль не підходить вимогам"""
-    pass
 
 
 def generate_hash(password: str, salt: str = "00000") -> str:
@@ -31,7 +30,7 @@ def generate_hash(password: str, salt: str = "00000") -> str:
         raise ValidationError(f"Пароль коротший за {MIN_PASSWORD_LENGTH} символів.")
 
     salted_password = password + salt
-    return hashlib.blake2b(salted_password.encode('utf-8')).hexdigest()
+    return hashlib.blake2b(salted_password.encode("utf-8")).hexdigest()
 
 
 def create_user(username, password):
@@ -43,7 +42,7 @@ def create_users(users_list):
     os.makedirs(DATA_DIR, exist_ok=True)
 
     try:
-        with open(USERS_FILE, mode='w', encoding='utf-8', newline='') as file:
+        with open(USERS_FILE, mode="w", encoding="utf-8", newline="") as file:
             writer = csv.writer(file)
             for username, password in users_list:
                 try:
@@ -81,19 +80,19 @@ def log_event(func):
             "result": "success" if result else "failure",
             "timestamp": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S"),
             "args": list(args),
-            "kwargs": kwargs
+            "kwargs": kwargs,
         }
 
         try:
             logs = []
             if os.path.exists(LOG_FILE):
-                with open(LOG_FILE, mode='r', encoding='utf-8') as file:
+                with open(LOG_FILE, mode="r", encoding="utf-8") as file:
                     try:
                         logs = json.load(file)
                     except json.JSONDecodeError:
                         logs = []
             logs.append(log_entry)
-            with open(LOG_FILE, mode='w', encoding='utf-8') as file:
+            with open(LOG_FILE, mode="w", encoding="utf-8") as file:
                 json.dump(logs, file, indent=4)
         except (OSError, PermissionError) as e:
             print(f"Помилка запису у файл логів: {e}")
@@ -111,7 +110,7 @@ def login(username: str, password: str) -> bool:
 
     users_db = {}
     try:
-        with open(USERS_FILE, mode='r', encoding='utf-8') as file:
+        with open(USERS_FILE, mode="r", encoding="utf-8") as file:
             reader = csv.reader(file)
             for row in reader:
                 if len(row) == 2:
@@ -145,17 +144,21 @@ def main():
         ("student", "StudentPass2026"),
         ("hacker8", "HackerPassword!"),
         ("dev009", "DeveloperPass09"),
-        ("boss10", "BossSecurePass1")
+        ("boss10", "BossSecurePass1"),
     )
-    print("--- Завдання 3: Безпечне хешування, CSV-база та JSON-логування з винятками ---")
-    print(f"Студент: {STUDENT_NAME} | Група: {GROUP_NAME} | Варіант: {VARIANT_NUMBER}\n")
+    print(
+        "--- Завдання 3: Безпечне хешування, CSV-база та JSON-логування з винятками ---"
+    )
+    print(
+        f"Студент: {STUDENT_NAME} | Група: {GROUP_NAME} | Варіант: {VARIANT_NUMBER}\n"
+    )
     print("=== Створення бази даних ===")
     create_users(users_to_register)
 
     print("\n=== Зчитування та вивід структурованої таблиці ===")
     users_db = {}
     try:
-        with open(USERS_FILE, mode='r', encoding='utf-8') as file:
+        with open(USERS_FILE, mode="r", encoding="utf-8") as file:
             reader = csv.reader(file)
             for row in reader:
                 if len(row) == 2:
@@ -167,9 +170,18 @@ def main():
     print("\n=== Тестування системи автентифікації ===")
     try:
         print("Спроба входу admin1:", login("admin1", "SuperSecurePass12"))
-        print("Спроба входу user02 (невірний пароль):", login("user02", "WrongPassword123"))
+        print(
+            "Спроба входу user02 (невірний пароль):",
+            login("user02", "WrongPassword123"),
+        )
         print("Спроба порожнього логіна:", login("", "Password12345"))
-    except (OSError, FileNotFoundError, PermissionError, ValidationError, ValueError) as e:
+    except (
+        OSError,
+        FileNotFoundError,
+        PermissionError,
+        ValidationError,
+        ValueError,
+    ) as e:
         print(f"\nКРИТИЧНА ПОМИЛКА під час авторизації: {type(e).__name__} - {e}")
 
 
