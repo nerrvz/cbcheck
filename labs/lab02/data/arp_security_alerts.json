@@ -1,0 +1,62 @@
+{
+  "generated_at": "2026-10-07T20:30:26.224782+00:00",
+  "source": "labs\\lab02\\data\\data_v11\\arp_table.csv",
+  "total_entries": 11,
+  "valid_entries": 8,
+  "invalid_entries": [
+    {
+      "line_no": 10,
+      "ip": "999.168.1.30",
+      "mac": "AA:BB:CC:DD:EE:30",
+      "interface": "eth0",
+      "entry_type": "dynamic"
+    },
+    {
+      "line_no": 11,
+      "ip": "192.168.1.31",
+      "mac": "GG:11:22:33:44:55",
+      "interface": "eth0",
+      "entry_type": "dynamic"
+    },
+    {
+      "line_no": 12,
+      "ip": "192.168.1.32",
+      "mac": "0011.2233.4455",
+      "interface": "eth0",
+      "entry_type": "dynamic"
+    }
+  ],
+  "conflicts": [
+    {
+      "mac": "de:ad:be:ef:00:01",
+      "ips": [
+        "192.168.1.20",
+        "192.168.1.21",
+        "192.168.1.22"
+      ],
+      "entries": [
+        {
+          "line_no": 6,
+          "ip": "192.168.1.20",
+          "mac": "de:ad:be:ef:00:01",
+          "interface": "eth0",
+          "entry_type": "dynamic"
+        },
+        {
+          "line_no": 7,
+          "ip": "192.168.1.21",
+          "mac": "de:ad:be:ef:00:01",
+          "interface": "eth0",
+          "entry_type": "dynamic"
+        },
+        {
+          "line_no": 8,
+          "ip": "192.168.1.22",
+          "mac": "de:ad:be:ef:00:01",
+          "interface": "wlan0",
+          "entry_type": "dynamic"
+        }
+      ]
+    }
+  ]
+}
