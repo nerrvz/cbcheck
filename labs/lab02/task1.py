@@ -24,7 +24,7 @@ class User:
         self, username: str, email: str, role: str, password: str, active: bool = True
     ) -> None:
         self.username = username
-        self.email = email  # проходить через setter з валідацією
+        self.email = email
         self.role = role
         self.active = active
         self.__password_hash = b""
