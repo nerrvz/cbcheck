@@ -67,11 +67,10 @@ def _require_category(connection: sqlite3.Connection, category_id: int) -> None:
         raise NotFoundError("Категорію не знайдено")
 
 
-# ---------- категорії ----------
 
 
 def create_category(name: str) -> dict[str, Any]:
-    """Створити категорію."""
+    """Створити категорію"""
     with closing(_connect()) as connection:
         try:
             with connection:
@@ -84,7 +83,7 @@ def create_category(name: str) -> dict[str, Any]:
 
 
 def list_categories() -> list[dict[str, Any]]:
-    """Список категорій за зростанням id."""
+    """Список категорій за зростанням id"""
     with closing(_connect()) as connection:
         rows = connection.execute(
             "SELECT id, name FROM categories ORDER BY id ASC"
@@ -93,7 +92,7 @@ def list_categories() -> list[dict[str, Any]]:
 
 
 def delete_category(category_id: int) -> None:
-    """Видалити порожню категорію."""
+    """Видалити порожню категорію"""
     with closing(_connect()) as connection:
         try:
             with connection:
@@ -108,11 +107,10 @@ def delete_category(category_id: int) -> None:
             raise NotFoundError("Категорію не знайдено")
 
 
-# ---------- записи ----------
 
 
 def create_record(data: dict[str, Any]) -> dict[str, Any]:
-    """Додати запис і повернути його з category_name."""
+    """Додати запис і повернути його з category_name"""
     with closing(_connect()) as connection:
         try:
             with connection:
@@ -125,7 +123,7 @@ def create_record(data: dict[str, Any]) -> dict[str, Any]:
 
 
 def get_record(record_id: int) -> dict[str, Any]:
-    """Отримати запис за id."""
+    """Отримати запис за id"""
     with closing(_connect()) as connection:
         record = _fetch_record(connection, record_id)
         if record is None:
@@ -142,7 +140,7 @@ def list_records(
         limit: int = 20,
         offset: int = 0,
 ) -> list[dict[str, Any]]:
-    """Список записів з фільтрами (AND) і поділом на сторінки."""
+    """Список записів з фільтрами (AND) і поділом на сторінки"""
     conditions: list[str] = []
     params: list[Any] = []
     if category_id is not None:
@@ -169,7 +167,7 @@ def list_records(
 
 
 def replace_record(record_id: int, data: dict[str, Any]) -> dict[str, Any]:
-    """Повна заміна змінюваних полів; id не змінюється."""
+    """Повна заміна змінюваних полів; id не змінюється"""
     with closing(_connect()) as connection:
         try:
             with connection:
@@ -190,7 +188,7 @@ def replace_record(record_id: int, data: dict[str, Any]) -> dict[str, Any]:
 
 
 def delete_record(record_id: int) -> None:
-    """Видалити запис."""
+    """Видалити запис"""
     with closing(_connect()) as connection:
         with connection:
             cursor = connection.execute(
@@ -201,10 +199,10 @@ def delete_record(record_id: int) -> None:
 
 
 def create_records_bulk(items: list[dict[str, Any]]) -> list[dict[str, Any]]:
-    """Атомарно додати пакет записів: або всі, або жодного."""
+    """Атомарно додати пакет записів"""
     with closing(_connect()) as connection:
         try:
-            with connection:  # одна транзакція на весь пакет
+            with connection:
                 for category_id in sorted({item["category_id"] for item in items}):
                     _require_category(connection, category_id)
                 new_ids = [

@@ -1,4 +1,4 @@
-"""Pydantic-моделі запитів і відповідей."""
+"""Pydantic-моделі запитів і відповідей"""
 
 from typing import Literal
 
@@ -10,7 +10,7 @@ Status = Literal["new", "in_progress", "done"]
 
 
 class CategoryCreate(BaseModel):
-    """Тіло запиту для створення категорії."""
+    """Тіло запиту для створення категорії"""
 
     model_config = ConfigDict(str_strip_whitespace=True, extra="forbid")
 
@@ -18,14 +18,14 @@ class CategoryCreate(BaseModel):
 
 
 class CategoryRead(BaseModel):
-    """Категорія у відповіді."""
+    """Категорія у відповіді"""
 
     id: int
     name: str
 
 
 class RecordCreate(BaseModel):
-    """Тіло запиту для створення запису (без id)."""
+    """Тіло запиту для створення запису (без id)"""
 
     model_config = ConfigDict(str_strip_whitespace=True, extra="forbid")
 
@@ -42,18 +42,18 @@ class RecordCreate(BaseModel):
 
 
 class RecordReplace(RecordCreate):
-    """Тіло PUT: усі змінювані поля обов'язкові."""
+    """Тіло PUT: усі змінювані поля обов'язкові"""
 
 
 class RecordRead(RecordCreate):
-    """Запис у відповіді."""
+    """Запис у відповіді"""
 
     id: int
     category_name: str
 
 
 class StudentRead(BaseModel):
-    """Дані студента."""
+    """Дані студента"""
 
     student_name: str
     group_name: str
@@ -61,6 +61,6 @@ class StudentRead(BaseModel):
 
 
 class ErrorRead(BaseModel):
-    """Повідомлення про помилку."""
+    """Повідомлення про помилку"""
 
     detail: str

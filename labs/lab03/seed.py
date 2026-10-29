@@ -19,7 +19,7 @@ RECORD_KEYS = {"code", "title", "category_id", "value", "status"}
 
 
 class SeedError(Exception):
-    """Помилка початкових даних або заповнення бази."""
+    """Помилка початкових даних або заповнення бази"""
 
 
 def _is_int(value: object) -> bool:
@@ -61,7 +61,7 @@ def _check_record(index: int, item: object, category_ids: set[int]) -> None:
 
 
 def load_seed(path: Path = SEED_PATH) -> dict[str, list[dict[str, Any]]]:
-    """Прочитати JSON і перевірити його вміст."""
+    """Прочитати JSON і перевірити його вміст"""
     try:
         data = json.loads(path.read_text(encoding="utf-8"))
     except FileNotFoundError as exc:
@@ -95,7 +95,7 @@ def load_seed(path: Path = SEED_PATH) -> dict[str, list[dict[str, Any]]]:
 def seed_database(data: dict[str, list[dict[str, Any]]]) -> bool:
     """Заповнити порожню базу однією транзакцією.
 
-    Повертає False, якщо база вже містить дані (нічого не змінюється).
+    Повертає False, якщо база вже містить дані
     """
     with closing(get_connection()) as connection:
         try:
@@ -133,7 +133,7 @@ def seed_database(data: dict[str, list[dict[str, Any]]]) -> bool:
 
 
 def main() -> int:
-    """Точка входу: python -m labs.lab03.seed."""
+    """Точка входу: python -m labs.lab03.seed"""
     logging.basicConfig(level=logging.INFO, format="[%(levelname)s] %(message)s")
     try:
         data = load_seed()
